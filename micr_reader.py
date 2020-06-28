@@ -10,22 +10,23 @@ import imutils
 import cv2
 
 
-def extract_digits_and_symbols(image, charCnts, minW=5, minH=15):
+def extract_digits_and_symbols(image, charContours, minW=5, minH=15):
     # grab the internal Python iterator for the list of character
     # contours, then  initialize the character ROI and location
     # lists, respectively
-    charIter = charCnts.__iter__()
+    charContourIter = charContours.__iter__()
     rois = []
     locs = []
 
     # keep looping over the character contours until we reach the end
     # of the list
+
     while True:
         try:
             # grab the next character contour from the list, compute
             # its bounding box, and initialize the ROI
-            c = next(charIter)
-            (cX, cY, cW, cH) = cv2.boundingRect(c)
+            contour = next(charContourIter)
+            (cX, cY, cW, cH) = cv2.boundingRect(contour)
             roi = None
 
             # check to see if the width and height are sufficiently
@@ -42,7 +43,7 @@ def extract_digits_and_symbols(image, charCnts, minW=5, minH=15):
                 # need to grab the next two parts from our iterator,
                 # followed by initializing the bounding box
                 # coordinates for the symbol
-                parts = [c, next(charIter), next(charIter)]
+                parts = [contour, next(charContourIter), next(charContourIter)]
                 (sXA, sYA, sXB, sYB) = (np.inf, np.inf, -np.inf,
                                         -np.inf)
 
