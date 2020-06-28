@@ -70,6 +70,15 @@ def extract_digits_and_symbols(image, charContours, minW=5, minH=15):
     # return a tuple of the ROIs and locations
     return (rois, locs)
 
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+                help="path to input image")
+ap.add_argument("-r", "--reference", required=True,
+                help="path to reference MICR E-13B font")
+args = vars(ap.parse_args())
+
+
 # initialize the list of reference character names, in the same
 # order as they appear in the reference image where the digits
 # their names and:
