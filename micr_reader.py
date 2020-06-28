@@ -100,16 +100,16 @@ ref = cv2.threshold(ref, 0, 255, cv2.THRESH_BINARY_INV |
 
 # find contours in the MICR image (i.e,. the outlines of the
 # characters) and sort them from left to right
-refCnts = cv2.findContours(ref.copy(), cv2.RETR_EXTERNAL,
-                           cv2.CHAIN_APPROX_SIMPLE)
-refCnts = refCnts[0] if imutils.is_cv2() else refCnts[1]
-refCnts = contours.sort_contours(refCnts, method="left-to-right")[0]
+refContours = cv2.findContours(ref.copy(), cv2.RETR_EXTERNAL,
+                               cv2.CHAIN_APPROX_SIMPLE)
+refContours = refContours[0] #if imutils.is_cv2() else refContours[1]
+refContours = contours.sort_contours(refContours, method="left-to-right")[0]
 
 # create a clone of the original image so we can draw on it
 clone = np.dstack([ref.copy()] * 3)
 
 # loop over the (sorted) contours
-for c in refCnts:
+for c in refContours:
     # compute the bounding box of the contour and draw it on our
     # image
     (x, y, w, h) = cv2.boundingRect(c)
@@ -121,7 +121,7 @@ cv2.waitKey(0)
 
 # extract the digits and symbols from the list of contours, then
 # initialize a dictionary to map the character name to the ROI
-(refROIs, refLocs) = extract_digits_and_symbols(ref, refCnts,
+(refROIs, refLocs) = extract_digits_and_symbols(ref, refContours,
                                                 minW=10, minH=20)
 chars = {}
 
@@ -146,4 +146,3 @@ for (name, roi, loc) in zip(charNames, refROIs, refLocs):
 
 # show the output of our better method
 cv2.imshow("Better Method", clone)
-cv2.waitKey(0)
