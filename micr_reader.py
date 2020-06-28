@@ -146,3 +146,4 @@ for (name, roi, loc) in zip(charNames, refROIs, refLocs):
 
 # show the output of our better method
 cv2.imshow("Better Method", clone)
+cv2.waitKey(0)
