@@ -108,6 +108,7 @@ refContours = contours.sort_contours(refContours, method="left-to-right")[0]
 # create a clone of the original image so we can draw on it
 clone = np.dstack([ref.copy()] * 3)
 
+"""
 # loop over the (sorted) contours
 for c in refContours:
     # compute the bounding box of the contour and draw it on our
@@ -118,6 +119,7 @@ for c in refContours:
 # show the output of applying the simple contour method
 cv2.imshow("Simple Method", clone)
 cv2.waitKey(0)
+"""
 
 # extract the digits and symbols from the list of contours, then
 # initialize a dictionary to map the character name to the ROI
@@ -144,6 +146,5 @@ for (name, roi, loc) in zip(charNames, refROIs, refLocs):
     cv2.imshow("Char", roi)
     cv2.waitKey(0)
 
-# show the output of our better method
 cv2.imshow("Better Method", clone)
 cv2.waitKey(0)
